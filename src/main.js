@@ -4,6 +4,16 @@ import 'izitoast/dist/css/iziToast.min.css';
 import { getImages } from './js/pixabay-api';
 import { renderImages } from './js/render-functions';
 
+function showLoader() {
+  const loader = document.querySelector('.loader');
+  loader.style.display = 'flex';
+}
+
+function hideLoader() {
+  const loader = document.querySelector('.loader');
+  loader.style.display = 'none';
+}
+
 export const refs = {
   searchForm: document.querySelector('.search-form'),
   inputSearch: document.querySelector('.input-search'),
@@ -33,6 +43,7 @@ function handleSubmit(event) {
     );
     clearGallery();
   } else {
+    showLoader();
     getImages(nameId)
       .then(res => {
         if (!res.ok) {
@@ -43,6 +54,7 @@ function handleSubmit(event) {
       })
       .then(data => {
         if (data.hits.length == 0) {
+          showLoader();
           showError(
             'Sorry, there are no images matching your search query. Please try again!'
           );
@@ -53,6 +65,9 @@ function handleSubmit(event) {
       })
       .catch(error => {
         console.log(error);
+      })
+      .finally(() => {
+        hideLoader();
       });
   }
   event.target.elements.name.value = '';
