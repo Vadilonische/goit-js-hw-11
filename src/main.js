@@ -32,10 +32,13 @@ function clearGallery() {
   refs.gallery.innerHTML = '';
 }
 
+hideLoader();
+
 refs.searchForm.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   event.preventDefault();
+
   const nameId = event.target.elements.name.value.trim();
   if (nameId === '') {
     showError(
