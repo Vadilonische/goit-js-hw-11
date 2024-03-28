@@ -46,6 +46,7 @@ function handleSubmit(event) {
     );
     clearGallery();
   } else {
+    clearGallery();
     showLoader();
     getImages(nameId)
       .then(res => {
